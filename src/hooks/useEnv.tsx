@@ -1,0 +1,1 @@
+export const URL:string = import.meta.env.VITE_URl
