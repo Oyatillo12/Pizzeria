@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const {pathname} = useLocation()
   const boughtedPizza:Products[] = useSelector((state:RootState) => state.bought)
+  const countedPizzas = boughtedPizza.reduce((acc:number, item:Products) => acc + item.count, 0)
   const allPrice = boughtedPizza.reduce((acc:number, item:Products) => acc + item.price, 0)
 
   return (
@@ -25,7 +26,7 @@ const Navbar: React.FC = () => {
         <span className=' left-2  inset-y-auto '>{allPrice} ₽</span>
         <div className='flex right-6 inset-y-auto items-center  space-x-2'>
           <ShoppingCartOutlined className='scale-110' />
-          <span >{boughtedPizza.length}</span>
+          <span >{countedPizzas}</span>
         </div>
       </button> : null}
     </header>
