@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Button, Segmented } from 'antd';
-import { AddIcon } from '../assets/images/icon';
-import { Context } from '../context/PizzaContext';
+import { AddIcon } from '../../assets/images/icon';
+import { Context } from '../../context/PizzaContext';
 import { useDispatch} from 'react-redux';
-import { AppDispatch } from '../store/store';
-import { addPizzaToCart } from '../store/PizzaSlice';
+import { AppDispatch } from '../../store/store';
+import { addPizzaToCart } from '../../store/PizzaSlice';
 
 export interface Products {
     id: number;
@@ -15,14 +15,12 @@ export interface Products {
     img: string;
     size?: string;
     type?: string;
-}
-
+};
 
 const PizzaCard: React.FC = () => {
-    const [_productType, _setProductType] = useState('1');
     const sizePizza: string[] = ["26 см.", "30 см.", "40 см."];
     const typePizza: string[] = ["тонкое", "традиционное"];
-    const { pizzas, setPizzas } = useContext(Context)
+    const { pizzas, setPizzas, isLoading } = useContext(Context)
     const [typePZ, setTypePZ] = useState<string>('')
     const [sizePZ, setSizePZ] = useState<string>('')
     const dispatch: AppDispatch = useDispatch()
@@ -37,7 +35,7 @@ const PizzaCard: React.FC = () => {
 
     return (
         <div className='flex flex-wrap items-center mt-[35px] gap-[35px] justify-between'>
-            {pizzas.length ? pizzas.map((item: Products) => (
+            {isLoading ? <div className='loader mx-auto mt-[70px]'></div> : pizzas.length ? pizzas.map((item: Products) => (
                 <div key={item.id} className='w-[260px]'>
                     <img className='w-full rounded-lg h-[260px] object-cover' src={item.img} alt={item.name} width={260} height={260} />
                     <div className='mt-[11px] w-[90%] mx-auto'>
@@ -57,7 +55,7 @@ const PizzaCard: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            )) : null}
+            )) : <p className='text-center text-[25px] mx-auto mt-[50px] font-bold'>Not any pizzas</p>}
         </div>
     )
 }

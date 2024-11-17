@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Products } from "../components/PizzaCard"
+import { Products } from "../components/HomePage/PizzaCard"
 
 
 interface BoughtType {
@@ -15,8 +15,6 @@ export const PizzaSlice = createSlice({
     reducers: {
         addPizzaToCart(state, action:PayloadAction<Products>) {
             const productExists = state.bought.some((b: Products) => b.id === action.payload.id);
-            console.log(action.payload.price);
-            
             if (productExists) {
                 state.bought = state.bought.map((b: Products) =>
                     b.id === action.payload.id

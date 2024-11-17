@@ -1,9 +1,5 @@
-import NavTopItem from '../components/NavTopItem';
-import PizzaCard from '../components/PizzaCard';
-
-
-
-
+import NavTopItem from '../components/HomePage/NavTopItem';
+import PizzaCard from '../components/HomePage/PizzaCard';
 
 const Home: React.FC = () => {
     return (

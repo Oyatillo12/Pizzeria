@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { useContext, useEffect, useState } from 'react'
-import { useAxios } from '../hooks/useAxios'
-import { Context } from '../context/PizzaContext';
+import { useAxios } from '../../hooks/useAxios'
+import { Context } from '../../context/PizzaContext';
 import { Products } from './PizzaCard';
 
 interface Category {
@@ -30,7 +30,15 @@ const NavTopItem: React.FC = () => {
     const handleSelect = (option: SortOption) => {
         setSelectedSort(option);
         setIsOpen(false);
-        setPizzas(pizzas.sort((a: Products, b: Products) => b.price - a.price))
+        setPizzas([...pizzas].sort((a: Products, b: Products) => {
+            if (option.value === '1') {
+                return a.id - b.id
+            } else if (option.value === '2') {
+                return a.price - b.price
+            } else {
+                return a.name.localeCompare(b.name)
+            }
+        }))
     };
 
 
