@@ -7,27 +7,37 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AddIcon, MinusIcon } from '../assets/images/icon'
 import { useNavigate } from 'react-router-dom'
 import ShoppingImg from '../assets/images/shopping.png'
-import { addPizzaToCart, clearShopping, removePizzaFromCart } from '../store/PizzaSlice'
+import { addPizzaToCart, clearShopping, minusPizzaFromCart, removePizzaFromCart } from '../store/PizzaSlice'
 import { Context } from '../context/PizzaContext'
 
 const SavePage: React.FC = () => {
   const navigate = useNavigate();
   const boughtedPizza: Products[] = useSelector((state: RootState) => state.bought);
-  const allPrice = boughtedPizza.reduce((acc: number, item: Products) => acc + item.price, 0);
+  const allPrice:number = boughtedPizza.reduce((acc: number, item: Products) => acc + item.price, 0);
+  const countedPizzas = boughtedPizza.reduce((acc:number, item:Products) => acc + item.count, 0)
   const dispatch: AppDispatch = useDispatch()
-  const {setPizzas, pizzas} = useContext(Context)
+  const { setPizzas, pizzas } = useContext(Context)
 
-  function handleClear(){
+  function handleClear():void {
     dispatch(clearShopping())
-    setPizzas(pizzas.map(p => ({ ...p, count: 0 })));
+    setPizzas(pizzas.map((p:Products) => ({ ...p, count: 0 })));
   }
-  function handleAddPizza(item: Products){
-    dispatch(addPizzaToCart(item))
+  function handleAddPizza(id: number):void {
+    const addPizza:Products | undefined = pizzas.find((p:Products) => p.id === id)
+    if (addPizza) {
+      dispatch(addPizzaToCart(addPizza))
+    }
+    setPizzas(pizzas.map((p:Products) => p.id === id ? { ...p, count: p.count + 1 } : p));
   }
-  function handleRemovePizza(id: number){
+  function handleRemovePizza(id: number):void {
     dispatch(removePizzaFromCart(id));
+    setPizzas(pizzas.map((p:Products) => p.id === id ? { ...p, count: 0 } : p));
   }
-
+  function handleMinusPizza(item: Products):void {
+    dispatch(minusPizzaFromCart(item));
+    setPizzas(pizzas.map((p: Products) => p.id === item.id ? { ...p, count: p.count - 1 } : p));
+  }
+  
 
   return (
     <div>
@@ -51,9 +61,9 @@ const SavePage: React.FC = () => {
                   </div>
                 </div>
                 <div className='flex items-center space-x-3'>
-                  <button className='w-[32px] h-[32px] rounded-full border-2 border-[#FE5F1E] text-[#FE5F1E] flex items-center justify-center hover:text-white hover:bg-[#FE5F1E] duration-300'><MinusIcon /></button>
+                  <button onClick={() => handleMinusPizza(item)} className='w-[32px] h-[32px] rounded-full border-2 border-[#FE5F1E] text-[#FE5F1E] flex items-center justify-center hover:text-white hover:bg-[#FE5F1E] duration-300'><MinusIcon /></button>
                   <span className='text-[22px] font-bold leading-[26px]'>{item.count}</span>
-                  <button onClick={() => handleAddPizza(item)} className='w-[32px] h-[32px] rounded-full border-2 border-[#FE5F1E] text-[#FE5F1E] flex items-center justify-center hover:text-white hover:bg-[#FE5F1E] duration-300'><AddIcon /></button>
+                  <button onClick={() => handleAddPizza(item.id)} className='w-[32px] h-[32px] rounded-full border-2 border-[#FE5F1E] text-[#FE5F1E] flex items-center justify-center hover:text-white hover:bg-[#FE5F1E] duration-300'><AddIcon /></button>
                 </div>
                 <div className='flex items-center space-x-[93px]'>
                   <strong className=' text-[22px] leading-[26px]'>{item.price} ₽</strong>
@@ -62,7 +72,7 @@ const SavePage: React.FC = () => {
               </div>
             ))}
             <div className='mt-[30px] flex items-center justify-between'>
-              <p className='text-[22px] leading-[26px]'>Всего пицц: <strong>{boughtedPizza.length} шт.</strong></p>
+              <p className='text-[22px] leading-[26px]'>Всего пицц: <strong>{countedPizzas} шт.</strong></p>
               <p className='text-[22px] leading-[26px]'>Сумма заказа: <strong className='text-[#FE5F1E]'>{allPrice} ₽</strong></p>
             </div>
             <div className='mt-[30px] flex items-center justify-between'>
