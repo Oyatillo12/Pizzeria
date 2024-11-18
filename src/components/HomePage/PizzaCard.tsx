@@ -34,28 +34,29 @@ const PizzaCard: React.FC = () => {
     }
 
     return (
-        <div className='flex flex-wrap items-center mt-[35px] gap-[35px] justify-between'>
-            {isLoading ? <div className='loader mx-auto mt-[70px]'></div> : pizzas.length ? pizzas.map((item: Products) => (
-                <div key={item.id} className='w-[260px]'>
-                    <img className='w-full rounded-lg h-[260px] object-cover' src={item.img} alt={item.name} width={260} height={260} />
-                    <div className='mt-[11px] w-[90%] mx-auto'>
-                        <h3 className='text-[22xp] font-bold text-center leading-[24px]'>{item.name}</h3>
-                        <div className='flex items-center justify-center flex-col bg-[#F3F3F3] rounded-lg p-[4px]  mx-auto mt-[22px]'>
-                            <Segmented<string> size='large' className='!font-bold !bg-transparent  !text-[14px] !leading-[17px] '
+        <div className='flex flex-wrap justify-center lg:justify-between items-center gap-[50px] lg:gap-[35px] mt-[35px]'>
+            {isLoading ? 
+            <div className='mx-auto mt-[70px] loader'></div> : pizzas.length ? pizzas.map((item: Products) => (
+                <div key={item.id} className='w-[340px] lg:w-[260px]'>
+                    <img className='rounded-lg w-full h-[260px] object-cover' src={item.img} alt={item.name} width={260} height={260} />
+                    <div className='mx-auto mt-[5px] lg:mt-[11px] w-full'>
+                        <h3 className='font-bold text-[18px] text-center lg:text-[22xp] leading-[24px]'>{item.name}</h3>
+                        <div className='flex flex-col justify-center items-center mt-[22px] rounded-lg'>
+                            <Segmented<string> size='large' className='!rounded-b-none w-full font-bold !text-[14px] !leading-[14px]'
                                 options={typePizza} onChange={(value) => setTypePZ(value)}
                             />
-                            <Segmented<string> size='large' className='!font-bold !bg-transparent  !text-[14px] !leading-[17px] ' options={sizePizza}  onChange={(value) => setSizePZ(value)}
+                            <Segmented<string> size='large' className='!rounded-t-none w-full font-bold !text-[14px] !leading-[17px]' options={sizePizza}  onChange={(value) => setSizePZ(value)}
                             />
                         </div>
-                        <div className='flex items-center justify-between mt-4'>
-                            <strong className='text-[18px] leading-[22px] font-bold'> от {item.price} ₽</strong>
-                            <Button onClick={() => handleAddToCart(item)} type='text' icon={<AddIcon />} className='text-[#EB5A1E] w-[150px] rounded-full relative py-[15px] border-[#EB5A1E] text-[16px] leading-[19px] font-bold border hover:!text-[#EB5A1E] hover:!bg-[#00000011] duration-300'><span>Добавить</span>
-                                {item.count > 0 ? <span className='absolute bg-[#FE5F1E] h-[20px] text-[11] inset-y-0 my-auto right-1 w-[20px] text-white rounded-full'>{item.count}</span> : null}
+                        <div className='flex justify-between items-center mt-4'>
+                            <strong className='font-bold text-[18px] leading-[22px]'> от {item.price} ₽</strong>
+                            <Button onClick={() => handleAddToCart(item)} type='text' icon={<AddIcon />} className='relative border-[#EB5A1E] hover:!bg-[#00000011] py-[15px] border rounded-full w-[150px] font-bold text-[#EB5A1E] text-[16px] hover:!text-[#EB5A1E] leading-[19px] duration-300'><span>Добавить</span>
+                                {item.count > 0 ? <span className='right-1 absolute inset-y-0 bg-[#FE5F1E] my-auto rounded-full w-[20px] h-[20px] text-[11] text-white'>{item.count}</span> : null}
                             </Button>
                         </div>
                     </div>
                 </div>
-            )) : <p className='text-center text-[25px] mx-auto mt-[50px] font-bold'>Not any pizzas</p>}
+            )) : <p className='mx-auto mt-[50px] font-bold text-[25px] text-center'>Not any pizzas</p>}
         </div>
     )
 }

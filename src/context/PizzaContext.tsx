@@ -22,20 +22,20 @@ export const Context = createContext<ContextType>({
 })
 
 const PizzaContext:React.FC<{children:ReactNode}> = ({children}) => {
-    const [pizzas, setPizzas] = useState<Products[]>([]) 
     const [catogoryID, setCategoryID] = useState<string | number>('');
-
-
+    
+    
     const { data: products = [], isLoading } = useQuery({
         queryKey: ['products', catogoryID,],
         queryFn: () => useAxios().get(`/products?category_id=${catogoryID  == "1" ? "" : catogoryID}`).then(res => res.data),
     })
     
-
+    const [pizzas, setPizzas] = useState<Products[]>(products) 
+    
     useEffect(() =>{
         setPizzas(products)
     },[products,catogoryID])
-
+    
     return (
         <Context.Provider value={{ catogoryID, setCategoryID, pizzas, setPizzas, isLoading}}>
             {children}

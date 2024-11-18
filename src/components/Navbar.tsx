@@ -15,19 +15,18 @@ const Navbar: React.FC = () => {
   const allPrice = boughtedPizza.reduce((acc: number, item: Products) => acc + item.price, 0)
 
   return (
-
-    <header className='flex gsap-header items-center justify-between sticky top-[-50px] py-2 z-50 bg-white rounded-lg w-full'>
+    <header className='top-[-50px] z-50 sticky flex justify-between items-center bg-white py-2 max-md:py-1 rounded-lg w-full'>
       <div className='flex items-center space-x-4'>
-        <img src={LogoImg} alt="Logo img " width={38} height={38} />
-        <div className='flex flex-col items-start'>
-          <h2 className='text-[24px] leading-[29px] font-extrabold text-[#181818]'>Pizzeria</h2>
-          <p className='text-[#7B7B7B] text-[16px] leading-[19px]'>самая вкусная пицца во вселенной</p>
+        <img className='max-md:w-[30px] max-md:h-[30px]' src={LogoImg} alt="Logo img " width={38} height={38} />
+        <div className='max-sm:w-[126px]'>
+          <h2 className='font-extrabold text-[#181818] text-[24px] max-md:text-[18px] leading-[29px]'>Pizzeria</h2>
+          <p className='inline text-[#7B7B7B] text-[16px] max-md:text-[13px] leading-[19px]'>самая вкусная пицца во вселенной</p>
         </div>
       </div>
-      {!pathname.includes('save') ? <button onClick={() => navigate('/save')} className='px-[20px]  flex items-center justify-center space-x-[27px] py-[15px] bg-[#FE5F1E] relative rounded-[30px] font-bold text-white text-[16px] leading-[19px] after:absolute after:w-[1px] after:inset-x-auto after:mx-auto after:h-[25px] after:bg-[#FFFFFF40] '>
-        <span className=' left-2  inset-y-auto '>{allPrice} ₽</span>
-        <div className='flex right-6 inset-y-auto items-center  space-x-2'>
-          <ShoppingCartOutlined className='scale-110' />
+      {!pathname.includes('save') ? <button onClick={() => navigate('/save')} className='relative after:absolute after:inset-x-auto flex justify-center items-center space-x-[27px] max-md:space-x-5 bg-[#FE5F1E] after:bg-[#FFFFFF40] after:mx-auto px-[20px] max-md:px-[15px] py-[15px] max-md:py-[10px] rounded-[30px] after:w-[1px] after:h-[25px] font-bold text-[16px] text-white max-md:text-[13px] leading-[19px]'>
+        <span className='left-2 inset-y-auto'>{allPrice} ₽</span>
+        <div className='flex items-center space-x-2 max-md:space-x-1'>
+          <ShoppingCartOutlined className='sm:scale-110 scale-90' />
           <span >{countedPizzas}</span>
         </div>
       </button> : null}
