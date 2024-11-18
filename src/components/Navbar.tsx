@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   const allPrice = boughtedPizza.reduce((acc: number, item: Products) => acc + item.price, 0)
 
   return (
-    <header className='top-[-50px] z-50 sticky flex justify-between items-center bg-white py-2 max-md:py-1 rounded-lg w-full'>
+    <header className='sm:top-[-50px] top-[-20px] z-50 sticky flex justify-between items-center bg-white py-2 max-md:py-1 rounded-lg w-full'>
       <div className='flex items-center space-x-4'>
         <img className='max-md:w-[30px] max-md:h-[30px]' src={LogoImg} alt="Logo img " width={38} height={38} />
         <div className='max-sm:w-[126px]'>
